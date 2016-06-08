@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<!--
+	Interphase by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Generic - Interphase by TEMPLATED</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/skel.min.js"></script>
+    <script src="js/skel-layers.min.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/selfjs.js"></script>
+    <noscript>
+        <link rel="stylesheet" href="css/skel.css" />
+        <link rel="stylesheet" href="css/style.css" />
+        <link rel="stylesheet" href="css/style-xlarge.css" />
+    </noscript>
+    <!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
+    <script>
+    var load_data;
+
+    function category_listen() {
+        category_selectedIndex = document.getElementById("category").selectedIndex;
+        category_options = document.getElementById("category").options;
+        //分類選單
+        //alert(data_options[category_selectedIndex].index);
+        //loading category data
+        if (category_options[category_selectedIndex].index != 0) {
+            data_manager(choose_data_url(category_options[category_selectedIndex].index));
+        }
+    }
+
+    function data_manager(url) {
+        getJSON(url).then(function(data) {
+            load_data = data;
+
+        }, function(status) { //error detection....
+            alert('Something went wrong.');
+        });
+
+    }
+
+    function create_html(i) {
+        lite_html = parse("<pre><code><h2>%s</h2><h3>醫師 :%s <br>電話:%s<br>地址:%s<br><br><br>%s</h3></code></pre>", load_data[category][i].name, load_data[category][i].doctor, load_data[category][i].phone, load_data[category][i].address, make_table(load_data[category][i].time));
+        document.getElementById("insert_data").innerHTML += lite_html;
+    }
+
+    function html_clear() {
+        document.getElementById("insert_data").innerHTML = "";
+    }
+
+
+    function ac() {
+    	//init
+    	html_clear();
+
+        s_name = document.getElementById("search_name").value;
+        s_tel = document.getElementById("search_tel").value;
+
+        //category = Object.keys(load_data);
+        //alert(load_data[category].length);
+        ac_flag1 = 0;
+        ac_flag2 = 0;
+        if (typeof load_data === 'undefined') {
+            alert("請選擇科別");
+            ac_flag1 = 0;
+        } else {
+            ac_flag1 = 1;
+            category = Object.keys(load_data);
+            //alert(load_data[category].length);
+        }
+        if (s_name == "" && s_tel == "") {
+            alert("請選擇姓名或電話做查詢依據");
+            ac_flag1 = 0;
+        } else {
+            ac_flag2 = 1;
+        }
+
+
+        if (ac_flag1 == 1 && ac_flag2 == 1) {
+            res_flag = 0;
+            for (var i = 0; i < load_data[category].length; i++) {
+                var data_name = load_data[category][i].name;
+                var data_doctor = load_data[category][i].doctor;
+                var data_phone = load_data[category][i].phone;
+
+                flag = fn_match(s_name, s_tel, data_name, data_doctor, data_phone);
+                if (flag == "match") {
+                    create_html(i);
+                    res_flag = 1;
+                }
+            };
+            if (res_flag == 0) {
+                alert("找不到資料");
+            }
+
+        }
+
+        //create_html();
+
+    }
+    </script>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header id="header">
+        <h1><a href="index.html">NCTU</a></h1>
+        <nav id="nav">
+            <ul>
+                <li><a href="index.html">Home</a>
+                </li>
+                <li><a href="demo.html">Demo</a>
+                </li>
+                <li><a href="elements.html">Elements</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main -->
+    <section id="main" class="wrapper">
+        <div class="container">
+
+            <header class="major">
+                <h2>GIS Project</h2>
+                <p>Hospital Search Engine</p>
+            </header>
+
+            <a href="near.html" class="button fit">最近的醫院</a>
+            <a href="time.html" class="button fit">依營業時間查詢</a>
+
+            <section>
+                <h3>快速查詢</h3>
+                <form method="post" action="#">
+                    <div class="row uniform 50%">
+                        <div class="12u$">
+                            <div class="select-wrapper">
+                                <select name="category" id="category" onchange="category_listen()">
+                                    <option value=" ">- 科別 -</option>
+                                    <option value="1" text="牙科">牙科</option>
+                                    <option value="1" text="婦產科">婦產科</option>
+                                    <option value="1" text="中醫">中醫</option>
+                                    <option value="1" text="聯合診所">聯合診所</option>
+                                    <option value="1" text="內科">內科</option>
+                                    <option value="1" text="小兒科">小兒科</option>
+                                    <option value="1" text="整形外科">整形外科</option>
+                                    <option value="1" text="耳鼻喉科">耳鼻喉科</option>
+                                    <option value="1" text="外科">外科</option>
+                                    <option value="1" text="皮膚科">皮膚科</option>
+                                    <option value="1" text="泌尿科">泌尿科</option>
+                                    <option value="1" text="家醫科">家醫科</option>
+                                    <option value="1" text="骨科">骨科</option>
+                                    <option value="1" text="眼科">眼科</option>
+                                    <option value="1" text="復健科">復健科</option>
+                                    <option value="1" text="精神科">精神科</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="6u 12u$(xsmall)">
+                            <input type="text" name="name" id="search_name" value="" placeholder="名稱(醫院或醫師)" />
+                        </div>
+                        <div class="6u$ 12u$(xsmall)">
+                            <input type="text" name="tel" id="search_tel" value="" placeholder="電話" />
+                        </div>
+
+                        <div class="12u$">
+                            <ul class="actions">
+                                <li>
+                                    <a class="button fit" onclick="ac()">Search</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="12u$" id="insert_data">
+
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </section>
+</body>
+
+</html>

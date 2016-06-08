@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Simple Map</title>
+    <meta charset="UTF-8">
+    <title>Generic - Interphase by TEMPLATED</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/skel.min.js"></script>
+    <script src="js/skel-layers.min.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/selfjs.js"></script>
+    <noscript>
+        <link rel="stylesheet" href="css/skel.css" />
+        <link rel="stylesheet" href="css/style.css" />
+        <link rel="stylesheet" href="css/style-xlarge.css" />
+    </noscript>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.min.js"></script>
+    <script type="text/javascript" src="http://sathishserver:20000/sites/SearchSampleDeveloperSite/SiteAssets/jquery-1.7.1.js"></script>
+    <script type="text/javascript" src="/_layouts/15/sp.runtime.js"></script>
+    <script type="text/javascript" src="/_layouts/15/sp.js"></script>
+    <script type="text/javascript" src="/_layouts/15/sp.search.js"></script>
+    <script src="js/selfjs.js"></script>
+    <script type="text/javascript">
+    'use strict';
+    $(document).ready(function() {});
+
+    function Search() {
+        //Getting the ClientContext
+        var clientContext = new SP.ClientContext("http://sathishserver:20000/sites/SearchSampleDeveloperSite/");
+        //Getting the Site
+        var contextSite = clientContext.get_site();
+        //Creating an object for the KeywordQuery Class
+        var keywordQuery = new Microsoft.SharePoint.Client.Search.Query.KeywordQuery(clientContext);
+        //Framing the Query Text.  Here you can give any CAML Query also.
+        keywordQuery.set_queryText($("#searchTextBox").val());
+        //Creating an object for SearchExecutor        
+        var searchExecutor = new Microsoft.SharePoint.Client.Search.Query.SearchExecutor(clientContext);
+        //Get the Results by Executing Query
+        this.results = searchExecutor.executeQuery(keywordQuery);
+        clientContext.executeQueryAsync(Function.createDelegate(this, this.onSearchSuccess), Function.createDelegate(this, this.onSearchError));
+    }
+
+    function onSearchSuccess(sender, args) {
+        alert('Success');
+        //Resolve the URL of the first result
+        alert(results.m_value.ResultTables[0].ResultRows[0].Path);
+        //Redirect to the Result URL
+        window.location.replace(results.m_value.ResultTables[0].ResultRows[0].Path);
+    }
+
+    function onSearchError(sender, args) {
+        alert('Error');
+    }
+    </script>
+
+
+    <script>
+    var Dentistry_url = "https://api.myjson.com/bins/4iv5f";
+    var Obstetrics_url = "https://api.myjson.com/bins/2aiej";
+    var joint_url = "https://api.myjson.com/bins/57j9n";
+
+
+    function distance(lat1, lon1, lat2, lon2) {
+        var R = 6371; // km (change this constant to get miles)
+        var dLat = (lat2 - lat1) * Math.PI / 180;
+        var dLon = (lon2 - lon1) * Math.PI / 180;
+        var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        var d = R * c;
+        if (d > 1) return Math.round(d) + "km";
+        else if (d <= 1) return Math.round(d * 1000) + "m";
+        return d;
+    }
+
+    //alert(distance(24.786149,121.011151,24.806014,120.967397));
+
+    function getJSON(url) {
+        return new Promise(function(resolve, reject) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('get', url, true);
+            xhr.responseType = 'json';
+            xhr.onload = function() {
+                var status = xhr.status;
+                if (status == 200) {
+                    resolve(xhr.response);
+                } else {
+                    reject(status);
+                }
+            };
+            xhr.send();
+        });
+    };
+
+    getJSON(Dentistry_url).then(function(data) {
+        //alert('Your Json result is:  ' + data.green); //you can comment this, i used it to debug
+
+        var myJsonString = JSON.stringify(data);
+        //alert("Dentistry_total_num: " + data.Dentistry.length);
+        //alert(data.Dentistry[4].doctor);
+        //result.innerText = myJsonString;
+        //result.innerText = myJsonString.Dentistry[1].doctor; //display the result in an HTML element
+    }, function(status) { //error detection....
+        alert('Something went wrong.');
+    });
+
+    day = 1;
+    time = 2;
+    search_hex = 0x000000;
+
+    ch_time = encode_choose(3, 2);
+
+    function parse(str) {
+        var args = [].slice.call(arguments, 1),
+            i = 0;
+
+        return str.replace(/%s/g, function() {
+            return args[i++];
+        });
+    }
+
+    function repalce(a) {
+        if (a == 1) {
+            return "O";
+        } else {
+            return "X";
+        }
+    }
+
+
+    function make_table(data_time) {
+        data_time = "0x" + data_time;
+        data_time = hex2dec(data_time);
+        bool_data = [];
+        b = 2;
+
+        for (var i = 0; i < 24; i++) {
+
+            cc = data_time % b;
+            data_time = parseInt(data_time / b);
+            bool_data.push(cc);
+        };
+
+        time_tmp = parse("<table><thead><tr><th>門診時間</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td>上午9:00~12:00</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr><tr><td>下午15:00~18:00</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr><tr><td>晚上18:30~21:30</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr></</table>", repalce(bool_data[20]), repalce(bool_data[17]), repalce(bool_data[14]), repalce(bool_data[11]), repalce(bool_data[8]), repalce(bool_data[5]), repalce(bool_data[2]), repalce(bool_data[19]), repalce(bool_data[16]), repalce(bool_data[13]), repalce(bool_data[10]), repalce(bool_data[7]), repalce(bool_data[4]), repalce(bool_data[1]), repalce(bool_data[18]), repalce(bool_data[15]), repalce(bool_data[12]), repalce(bool_data[9]), repalce(bool_data[6]), repalce(bool_data[3]), repalce(bool_data[0]));
+
+        return time_tmp;
+    }
+
+    data1 = "1FDBE0";
+
+
+    //compare
+
+    test_date = "李柏宏";
+    test_date2 = "麗池診所";
+    aa = "李柏宏";
+    bb = "麗池診所";
+
+    //fn_match(aa, bb, "test_date", "test_date", "bb");
+
+    function fn_match(key1, key2, data_name, data_doctor, data_phone) {
+        //Setting default
+        if (typeof key1 == 'undefined') {
+            key1 = '';
+        }
+        if (typeof key2 == 'undefined') {
+            key2 = '';
+        }
+
+        if (data_name.match(key1) != null || data_doctor.match(key1)) {
+            alert("match1");
+        } else if (data_phone.match(key2) != null) {
+            alert("match2");
+        } else {
+            alert("no match");
+        }
+
+    }
+
+    function create_html() {
+        lite_html = "<pre><code><h2>name</h2><h3>醫師 :aaa <br>電話:bbb<br>地址:ccc</h3></code></pre>";
+
+
+
+
+        document.getElementById("insert_data").innerHTML = lite_html;
+    }
+
+    function ac() {
+        create_html();
+
+    }
+
+
+    //alert(make_table(data1).toString());
+    //s = parse('hello %s, how are you doing %s', "tsao", "nonono");
+    //alert(s);
+    //alert(make_table(data1));
+
+
+    //alert(a3.toString(16));
+
+    //alert(a2.toString(16));
+
+    //alert(a4.toString(16));
+    //alert(a4);
+    </script>
+    <script language="javascript">
+    function doSearch() {
+        window.open("http://www.google.com.tw/search?hl=zh-TW&q=" + encodeURIComponent(document.getElementById("q").value) + "&btnI=" + encodeURIComponent("好手氣"));
+    }
+    </script>
+</head>
+
+<body>
+    <div class="12u$">
+        <ul class="actions">
+            <li>
+                <a class="button fit" onclick="ac()">Search</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="12u$" id="insert_data">
+        123
+    </div>
+
+</body>
+
+</html>

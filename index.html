@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<!--
+	Interphase by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>GIS Final Project</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/skel.min.js"></script>
+    <script src="js/skel-layers.min.js"></script>
+    <script src="js/init.js"></script>
+    <noscript>
+        <link rel="stylesheet" href="css/skel.css" />
+        <link rel="stylesheet" href="css/style.css" />
+        <link rel="stylesheet" href="css/style-xlarge.css" />
+    </noscript>
+    <!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
+</head>
+<script>
+$(document).ready(function() {
+    $('a[href^="#"]').on('click', function(e) {
+        e.preventDefault();
+
+        var target = this.hash,
+            $target = $(target);
+
+        $('html, body').stop().animate({
+            'scrollTop': $target.offset().top
+        }, 900, 'swing', function() {
+            window.location.hash = target;
+        });
+    });
+});
+</script>
+
+
+<body class="landing">
+
+    <!-- Header -->
+    <header id="header">
+        <h1><a href="index.html">NCTU</a></h1>
+        <nav id="nav">
+            <ul>
+                <li><a href="index.html">Home</a>
+                </li>
+                <li><a href="demo.html">Demo</a>
+                </li>
+                <li><a href="elements.html">Elements</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Banner -->
+    <section id="banner">
+        <h2>GIS Final Project</h2>
+        <p>Hospital Search Engine</p>
+        <ul class="actions">
+            <li>
+                <a href="#one" class="button big">Function Description</a>
+            </li>
+        </ul>
+    </section>
+
+    <!-- One -->
+    <section id="one" class="wrapper style1 align-center">
+        <div class="container">
+            <header>
+                <h2>Function Description</h2>
+                <p>三種主要查詢功能，可以依營業時間查詢、相對距離查詢、快速搜尋</p>
+            </header>
+            <div class="row 200%">
+                <section class="4u 12u$(small)">
+                    <i class="icon big rounded fa-clock-o"></i>
+                    <p>營業時間查詢</p>
+                    <p>如果需要尋找特定時間營業的診所，歡迎使用「營業時間查詢」的功能唷！</p>
+                </section>
+                <section class="4u 12u$(small)">
+                    <i class="icon big rounded fa-location-arrow"></i>
+                    <p>相對距離查詢</p>
+                    <p>如果想要查詢方圓一公里內的診所，歡迎使用「相對距離查詢」的功能唷！</p>
+                </section>
+                <section class="4u$ 12u$(small)">
+                    <i class="icon big rounded fa-search-plus"></i>
+                    <p>快速搜尋</p>
+                    <p>這裡可以快速查詢各診所的營業時間及詳細資料。</p>
+                </section>
+            </div>
+        </div>
+        <ul class="actions">
+            <li>
+                <a href="#two" class="button big">Team Member</a>
+            </li>
+        </ul>
+    </section>
+
+    <!-- Two -->
+    <section id="two" class="wrapper style2 align-center">
+        <div class="container">
+            <header>
+                <h2>Team Member</h2>
+                <!--<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio, autem.</p>-->
+            </header>
+            <div class="row">
+                <section class="feature 6u 12u$(small)">
+                    <img class="image fit" src="images/Jack.jpg" alt="" />
+                    <h3 class="title">王靖傑(鼻屎王) </h3>
+                    <p>排球是他的命，到處看妹是他的本性，貪生怕死是他活下來的理由，有他，生活就會多些麻煩、多些厭煩。</p>
+                </section>
+                <section class="feature 6u$ 12u$(small)">
+                    <img class="image fit" src="images/Fish.jpg" alt="" />
+                    <h3 class="title">余珮瑄(Fish)</h3>
+                    <p>有著可愛的微笑，甜美的歌聲，善解人意、孝順體貼，有了她，民宿老闆就會拿出私釀絕活給大家品嚐。</p>
+                </section>
+                <section class="feature 6u 12u$(small)">
+                    <img class="image fit" src="images/Guei.jpg" alt="" />
+                    <h3 class="title">郭怡伶(小規)</h3>
+                    <p>「一直吃」是她生活中不可或缺的一件事，有著江湖上人稱的胖規、肥規、圓規，因此她的字典裡沒有”減肥”兩個字。</p>
+                </section>
+                <section class="feature 6u$ 12u$(small)">
+                    <img class="image fit" src="images/Kevin.jpg" alt="" />
+                    <h3 class="title">廖政淳(淳哥) </h3>
+                    <p>心思縝密、文質彬彬、寵辱不驚；然而，沉默，是他的必殺計，只要發現淳哥沉默了，你就知道，你 死 定 了 ！</p>
+                </section>
+            </div>
+            <footer>
+                <ul class="actions">
+                    <li>
+                        <a href="demo.html" class="button alt big">DEMO</a>
+                    </li>
+                </ul>
+            </footer>
+        </div>
+    </section>
+</body>
+
+</html>
